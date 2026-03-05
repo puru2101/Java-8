@@ -171,30 +171,33 @@ public class Employee {
 		emp.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.groupingBy(Employee::getGender)))
 				.entrySet().forEach(e -> System.out.println(e + ","));
 		System.out.println("-----------------------");
-		
+
 		// 15)Group Employees NAme by Dept and then Gender
-				emp.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.groupingBy(Employee::getGender,Collectors.mapping(Employee::getName, Collectors.toList()))))
-						.entrySet().forEach(e -> System.out.println(e + ","));
-				System.out.println("-----------------------");
-        
-		//16) Average salary of each dept 
-			emp.stream().collect(Collectors.groupingBy(Employee::getDept,Collectors.averagingDouble(Employee::getSalary))).
-			entrySet().forEach(e->System.out.println(e+","));	
-			System.out.println("-----------------------");
-			
-			
-		//17)Each Dept Highest paid salary
-			emp.stream().collect(Collectors.groupingBy(Employee::getDept,Collectors.maxBy(Comparator.comparing(Employee::getSalary)))).
-			entrySet().forEach(e->System.out.println(e+","));
-			System.out.println("-----------------------");
-			emp.stream().collect(Collectors.toMap(Employee::getDept, Employee::getSalary,Double::max)).entrySet().forEach(e->System.out.println(e+","));
-			System.out.println("-----------------------");
-			
-		//18)Employee name in finance who join before 2021
-			emp.stream().
-			filter(e->e.getJoiningYear()<2021).
-			filter(e->e.getDept()=="Finance").map(e->e.getName()).
-			forEach(e->System.out.println(e+","));
+		emp.stream()
+				.collect(Collectors.groupingBy(Employee::getDept,
+						Collectors.groupingBy(Employee::getGender,
+								Collectors.mapping(Employee::getName, Collectors.toList()))))
+				.entrySet().forEach(e -> System.out.println(e + ","));
+		System.out.println("-----------------------");
+
+		// 16) Average salary of each dept
+		emp.stream().collect(Collectors.groupingBy(Employee::getDept, Collectors.averagingDouble(Employee::getSalary)))
+				.entrySet().forEach(e -> System.out.println(e + ","));
+		System.out.println("-----------------------");
+
+		// 17)Each Dept Highest paid salary
+		emp.stream()
+				.collect(Collectors.groupingBy(Employee::getDept,
+						Collectors.maxBy(Comparator.comparing(Employee::getSalary))))
+				.entrySet().forEach(e -> System.out.println(e + ","));
+		System.out.println("-----------------------");
+		emp.stream().collect(Collectors.toMap(Employee::getDept, Employee::getSalary, Double::max)).entrySet()
+				.forEach(e -> System.out.println(e + ","));
+		System.out.println("-----------------------");
+
+		// 18)Employee name in finance who join before 2021
+		emp.stream().filter(e -> e.getJoiningYear() < 2021).filter(e -> e.getDept() == "Finance").map(e -> e.getName())
+				.forEach(e -> System.out.println(e + ","));
 	}
 
 }
